@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/home_page.dart';
+import 'package:todo_app/Pages/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,9 +10,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: HomePage(),
+      theme: ThemeData(
+        primarySwatch: Colors.yellow,
+        checkboxTheme: CheckboxThemeData(
+          fillColor: WidgetStateProperty.all(Colors.orange[300]),
+          checkColor: WidgetStateProperty.all(Colors.white),
+        ),
+      ),
     );
   }
 }
