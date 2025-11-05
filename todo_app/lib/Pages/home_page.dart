@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/Util/dialog_box.dart';
 import 'package:todo_app/Util/todo_tile.dart';
 
 class HomePage extends StatefulWidget {
@@ -9,14 +10,46 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _controller = TextEditingController();
+
   List todoList = [
-    ['Make Tutorial', false],
-    ['Do Exercise', true],
+    ['Make breakfast', false],
+    ['Do Exercise', false],
+    ['Study Flutter', false],
+    ['Read a book', false],
+    ['Go for a walk', false],
   ];
 
   void checkBoxChenged(bool? value, int index) {
     setState(() {
       todoList[index][1] = !todoList[index][1];
+    });
+  }
+
+  void saveNewTask() {
+    setState(() {
+      todoList.add([_controller.text, false]);
+      _controller.clear();
+    });
+    Navigator.of(context).pop();
+  }
+
+  void createNewTask() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DialogBox(
+          controller: _controller,
+          onSave: saveNewTask,
+          onCancel: () => Navigator.of(context).pop(),
+        );
+      },
+    );
+  }
+
+  void deleteTask(int index) {
+    setState(() {
+      todoList.removeAt(index);
     });
   }
 
@@ -29,6 +62,11 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         title: Text('TO DO'),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: createNewTask,
+        child: Icon(Icons.add),
+      ),
+
       body: ListView.builder(
         itemCount: todoList.length,
         itemBuilder: (context, index) {
@@ -36,6 +74,7 @@ class _HomePageState extends State<HomePage> {
             taskName: todoList[index][0],
             taskCompleted: todoList[index][1],
             onChanged: (value) => checkBoxChenged(value, index),
+            deleteFunction: (context) => deleteTask(index),
           );
         },
       ),

@@ -15,10 +15,12 @@ class MyApp extends StatelessWidget {
       home: HomePage(),
       theme: ThemeData(
         primarySwatch: Colors.yellow,
-        checkboxTheme: CheckboxThemeData(
-          fillColor: WidgetStateProperty.all(Colors.orange[300]),
-          checkColor: WidgetStateProperty.all(Colors.white),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: Colors.yellow,
+          foregroundColor: Colors.black,
+          //elevation: 0,
         ),
+        useMaterial3: true, //new design
       ),
     );
   }
